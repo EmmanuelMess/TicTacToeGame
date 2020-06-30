@@ -15,7 +15,7 @@ class TicTacToeRenderer: Disposable {
     object Grid {
         const val STROKE_WIDTH = 5f
         const val TOP = 45f
-        const val HEIGHT = 75f
+        const val HEIGHT = 90f
         const val LEFT = 15f
         const val WIDTH = 70f
     }

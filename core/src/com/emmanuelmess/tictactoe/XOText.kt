@@ -1,6 +1,5 @@
 package com.emmanuelmess.tictactoe
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
@@ -12,14 +11,14 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 
-class TicTacToeText(generator: FreeTypeFontGenerator): Disposable {
+class XOText(generator: FreeTypeFontGenerator): Disposable {
     private val font: BitmapFont
     private val skin: Skin
     private val stage: Stage
 
     init {
         val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
-        parameter.size = 120
+        parameter.size = 180
         font = generator.generateFont(parameter)
 
         skin = Skin().apply {
@@ -28,12 +27,12 @@ class TicTacToeText(generator: FreeTypeFontGenerator): Disposable {
 
         stage = Stage(ScreenViewport())
 
-        val nameLabel = Label("Tic Tac Toe", skin).apply {
+        val nameLabel = Label("X    O", skin).apply {
             setAlignment(Align.topLeft)
         }
 
         val container = Table().apply {
-            add(nameLabel).padTop(100f).expand().top()
+            add(nameLabel).padBottom(50f).expand().bottom()
             setFillParent(true)
         }
 
