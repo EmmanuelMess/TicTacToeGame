@@ -3,6 +3,9 @@ package com.emmanuelmess.tictactoe
 import com.badlogic.gdx.math.Vector2
 
 object GameData {
+    var pointsX = 0
+    var pointsO = 0
+
     val occupied = arrayOfNulls<TicTacToeRenderer.Piece>(9)
     val data = mutableListOf<DrawableShape>()
     var drawXNext: Boolean = true

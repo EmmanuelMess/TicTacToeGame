@@ -1,12 +1,14 @@
 package com.emmanuelmess.tictactoe
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.viewport.Viewport
 
-class OActor(viewport: Viewport, x: Float, y: Float, width: Float, height: Float): DrawableShape(viewport, x, y, width, height) {
+class OActor(
+        viewport: Viewport,
+        x: Float, y: Float,
+        width: Float, height: Float
+): DrawableShape(viewport, x, y, width, height) {
     companion object {
         const val WIDTH = 4f
     }
@@ -16,10 +18,10 @@ class OActor(viewport: Viewport, x: Float, y: Float, width: Float, height: Float
             begin(ShapeRenderer.ShapeType.Filled)
 
             color = Color.BLACK
-            circle(x + width/2, y + height/2, width/2)
+            circle(x + width/2, y + height/2, width/2, 16)
 
             color = Color.WHITE
-            circle(x + width/2, y + height/2, width/2 - WIDTH)
+            circle(x + width/2, y + height/2, width/2 - WIDTH, 16)
 
             end()
         }

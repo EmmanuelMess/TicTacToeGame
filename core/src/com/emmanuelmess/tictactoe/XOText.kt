@@ -11,31 +11,47 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 
 class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
-    private val font: BitmapFont
-    private val skin: Skin
+    private val fontBig: BitmapFont
+    private val fontSmall: BitmapFont
+    private val skinBig: Skin
+    private val skinSmall: Skin
     private val stage: Stage
+    private val nameLabel: Label
+
 
     init {
-        val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
-        parameter.size = 180
-        font = generator.generateFont(parameter)
+        fontBig = generator.generateFont(FreeTypeFontGenerator.FreeTypeFontParameter().apply {
+            size = 180
+        })
 
-        skin = Skin().apply {
-            add("default", Label.LabelStyle(font, Color.BLACK))
+        skinBig = Skin().apply {
+            add("default", Label.LabelStyle(fontBig, Color.BLACK))
         }
 
+        fontSmall = generator.generateFont(FreeTypeFontGenerator.FreeTypeFontParameter().apply {
+            size = 80
+        })
+
+        skinSmall = Skin().apply {
+            add("default", Label.LabelStyle(fontSmall, Color.BLACK))
+        }
+        
         stage = Stage(ScreenViewport())
 
-        val nameLabel = Label("X    O", skin).apply {
+        nameLabel = Label("- | -", skinBig).apply {
             setAlignment(Align.topLeft)
         }
 
-        val container = Table().apply {
+        stage.addActor(Table().apply {
             add(nameLabel).padBottom(50f).expand().bottom()
             setFillParent(true)
-        }
+        })
 
-        stage.addActor(container)
+        stage.addActor(Table().apply {
+            add(Label("X", this@XOText.skinSmall)).padLeft(50f).expand().bottom().left()
+            add(Label("O", this@XOText.skinSmall)).padRight(50f).expand().bottom().right()
+            setFillParent(true)
+        })
     }
 
     override fun update(width: Int, height: Int) {
@@ -43,12 +59,16 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
     }
 
     override fun draw() {
+        nameLabel.setText("${GameData.pointsX} | ${GameData.pointsO}")
+
         stage.draw()
     }
 
     override fun dispose() {
-        font.dispose()
-        skin.dispose()
+        fontBig.dispose()
+        fontSmall.dispose()
+        skinBig.dispose()
+        skinSmall.dispose()
         stage.dispose()
     }
 }

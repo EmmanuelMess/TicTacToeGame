@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FillViewport
 
 const val DEBUG = true
@@ -18,7 +17,7 @@ class TicTacToeGame : ApplicationAdapter() {
     }
 
     object Grid {
-        const val STROKE_WIDTH = 5f
+        const val STROKE_WIDTH = 2f
         const val TOP = 45f
         const val HEIGHT = 90f
         const val LEFT = 15f
