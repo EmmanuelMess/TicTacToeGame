@@ -1,0 +1,3 @@
+Juego de ta te ti muy simple
+
+Mantiene el puntaje y es muy minimal
