@@ -106,6 +106,11 @@ class TicTacToeRenderer(
             Piece.O -> GameData.pointsO++
             Piece.X -> GameData.pointsX++
         }
+
+        if(Math.max(GameData.pointsO, GameData.pointsX) > 100) {
+            GameData.pointsO = 0
+            GameData.pointsX = 0
+        }
     }
 
     private fun isStalemate(): Boolean {
