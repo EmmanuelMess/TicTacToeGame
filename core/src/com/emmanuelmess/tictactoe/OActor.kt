@@ -10,7 +10,7 @@ class OActor(
         width: Float, height: Float
 ): DrawableShape(viewport, x, y, width, height) {
     companion object {
-        const val WIDTH = 4f
+        const val WIDTH = 4f * TicTacToeGame.Size.C
     }
 
     override fun draw(shapeRenderer: ShapeRenderer) {
@@ -18,10 +18,10 @@ class OActor(
             begin(ShapeRenderer.ShapeType.Filled)
 
             color = Color.BLACK
-            circle(x + width/2, y + height/2, width/2, 16)
+            circle(x + width/2, y + height/2, width/2)
 
             color = Color.WHITE
-            circle(x + width/2, y + height/2, width/2 - WIDTH, 16)
+            circle(x + width/2, y + height/2, width/2 - WIDTH)
 
             end()
         }

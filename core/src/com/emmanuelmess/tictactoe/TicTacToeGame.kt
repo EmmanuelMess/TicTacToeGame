@@ -12,16 +12,18 @@ const val DEBUG = true
 
 class TicTacToeGame : ApplicationAdapter() {
     object Size {
-        const val WIDTH = 100f
+        const val WIDTH = 1000f
         const val HEIGHT = 16 * WIDTH / 9
+
+        const val C = 10f
     }
 
     object Grid {
-        const val STROKE_WIDTH = 2f
-        const val TOP = 45f
-        const val HEIGHT = 90f
-        const val LEFT = 15f
-        const val WIDTH = 70f
+        const val STROKE_WIDTH = 2f * Size.C
+        const val TOP = 45f * Size.C
+        const val HEIGHT = 90f * Size.C
+        const val LEFT = 15f * Size.C
+        const val WIDTH = 70f * Size.C
     }
 
     private lateinit var ticTacToeText: TicTacToeText
@@ -66,7 +68,8 @@ class TicTacToeGame : ApplicationAdapter() {
 
     override fun render() {
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT
+                or if(Gdx.graphics.bufferFormat.coverageSampling) GL20.GL_COVERAGE_BUFFER_BIT_NV else 0)
 
         shapeRenderer.projectionMatrix = viewport.camera.combined
 

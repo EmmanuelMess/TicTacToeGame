@@ -1,6 +1,5 @@
 package com.emmanuelmess.tictactoe
 
-import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.viewport.Viewport
 

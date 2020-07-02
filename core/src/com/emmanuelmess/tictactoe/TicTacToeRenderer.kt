@@ -15,8 +15,8 @@ class TicTacToeRenderer(
         width: Float, height: Float
 ): DrawableShape(viewport, x, y, width, height) {
     object XAndO {
-        const val MARGIN_O = 2f
-        const val MARGIN_X = 5f
+        const val MARGIN_O = 2f * TicTacToeGame.Size.C
+        const val MARGIN_X = 5f * TicTacToeGame.Size.C
     }
 
     enum class Piece {
@@ -177,7 +177,7 @@ class TicTacToeRenderer(
                 color = Color.RED
 
                 begin(ShapeRenderer.ShapeType.Filled)
-                rectLine(start, end, 2f)
+                rectLine(start, end, 2f * TicTacToeGame.Size.C)
                 end()
             }
         }

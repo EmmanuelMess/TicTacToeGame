@@ -14,6 +14,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
 		config.useCompass = false;
+		config.numSamples = 2;
 		RelativeLayout layout = new RelativeLayout(this);
 		layout.addView(initializeForView(new TicTacToeGame(), config));
 		setContentView(layout);

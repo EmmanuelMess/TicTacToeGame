@@ -13,8 +13,8 @@ class XActor(viewport: Viewport, x: Float, y: Float, width: Float, height: Float
 
             begin(ShapeRenderer.ShapeType.Filled)
 
-            rectLine(x, y, x + width, y + height, 5f)
-            rectLine(x, y + height, x + width, y, 5f)
+            rectLine(x, y, x + width, y + height, 5f * TicTacToeGame.Size.C)
+            rectLine(x, y + height, x + width, y, 5f * TicTacToeGame.Size.C)
 
             end()
         }
