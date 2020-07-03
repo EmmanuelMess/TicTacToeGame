@@ -6,14 +6,12 @@
 
 Simple version of the Tic Tac Toe game
 
-<!--
 ## Download
-[<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.emmanuelmess.deadlinesapp)
-[<img alt="Get it on F-Droid" height="80" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png">](https://f-droid.org/packages/com.emmanuelmess.deadlinesapp/)
--->
+[<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.emmanuelmess.tictactoe)
+[<img alt="Get it on F-Droid" height="80" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png">](https://f-droid.org/packages/com.emmanuelmess.tictactoe/)
 
 ## Screenshots
-<img src="Screenshot_mainview.png" data-canonical-src="Screenshot_mainview.png" height="350" />
+<img src="Screenshot_mainview.png" data-canonical-src="Screenshot_mainview.png" height="350" /> <img src="Screenshot_mainview1.png" data-canonical-src="Screenshot_mainview1.png" height="350" />
 
 ## License: GPL3
 
