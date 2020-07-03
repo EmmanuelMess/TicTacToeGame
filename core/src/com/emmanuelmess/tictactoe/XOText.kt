@@ -1,22 +1,28 @@
 package com.emmanuelmess.tictactoe
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+
 
 class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
     private val fontBig: BitmapFont
     private val fontSmall: BitmapFont
     private val skinBig: Skin
     private val skinSmall: Skin
-    private val stage: Stage
+    private val restartTexture: Texture
     private val nameLabel: Label
+    private val restartButton: Button
+    private val stage: Stage
 
 
     init {
@@ -35,15 +41,32 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
         skinSmall = Skin().apply {
             add("default", Label.LabelStyle(fontSmall, Color.BLACK))
         }
-        
-        stage = Stage(ScreenViewport())
 
         nameLabel = Label("- | -", skinBig).apply {
             setAlignment(Align.topLeft)
         }
 
+        restartTexture = Texture(Gdx.files.internal("images/restart_game.png"))
+
+        val restartDrawable = TextureRegionDrawable(restartTexture)
+
+        restartButton = Button(restartDrawable, restartDrawable).apply {
+            setSize(16f, 16f)
+
+            addListener(object : ChangeListener() {
+                override fun changed(event: ChangeEvent?, actor: Actor?) {
+                    GameData.resetPoints()
+                }
+            })
+        }
+
+        stage = Stage(ScreenViewport())
+
         stage.addActor(Table().apply {
-            add(nameLabel).padBottom(50f).expand().bottom()
+            add(VerticalGroup().apply {
+                addActor(nameLabel)
+                addActor(restartButton)
+            }).padBottom(50f).expand().bottom()
             setFillParent(true)
         })
 
@@ -52,6 +75,8 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
             add(Label("O", this@XOText.skinSmall)).padRight(50f).expand().bottom().right()
             setFillParent(true)
         })
+
+        Gdx.input.inputProcessor = stage
     }
 
     override fun update(width: Int, height: Int) {
@@ -69,6 +94,7 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
         fontSmall.dispose()
         skinBig.dispose()
         skinSmall.dispose()
+        restartTexture.dispose()
         stage.dispose()
     }
 }

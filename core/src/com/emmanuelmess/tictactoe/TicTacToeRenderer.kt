@@ -108,8 +108,7 @@ class TicTacToeRenderer(
         }
 
         if(Math.max(GameData.pointsO, GameData.pointsX) > 100) {
-            GameData.pointsO = 0
-            GameData.pointsX = 0
+            GameData.resetPoints()
         }
     }
 

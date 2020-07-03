@@ -19,4 +19,10 @@ object GameData {
         toRestart = null
         ended = false
     }
+
+    fun resetPoints() {
+        restart()
+        pointsX = 0
+        pointsO = 0
+    }
 }
