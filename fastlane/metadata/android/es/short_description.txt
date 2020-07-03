@@ -1,3 +1,1 @@
-Very simple tic tac toe game
-
 Juego de Ta Te Ti muy simple
