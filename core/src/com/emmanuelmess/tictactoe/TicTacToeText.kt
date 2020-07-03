@@ -8,12 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 
-class TicTacToeText(generator: FreeTypeFontGenerator): DrawableEntity {
+class TicTacToeText(stage: Stage, generator: FreeTypeFontGenerator): StageEntity {
     private val font: BitmapFont
     private val skin: Skin
-    private val stage: Stage
 
     init {
         val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
@@ -23,8 +21,6 @@ class TicTacToeText(generator: FreeTypeFontGenerator): DrawableEntity {
         skin = Skin().apply {
             add("default", Label.LabelStyle(font, Color.BLACK))
         }
-
-        stage = Stage(ScreenViewport())
 
         val nameLabel = Label("Tic Tac Toe", skin).apply {
             setAlignment(Align.topLeft)
@@ -38,17 +34,10 @@ class TicTacToeText(generator: FreeTypeFontGenerator): DrawableEntity {
         stage.addActor(container)
     }
 
-    override fun update(width: Int, height: Int) {
-        stage.viewport.update(width, height, true)
-    }
-
-    override fun draw() {
-        stage.draw()
-    }
+    override fun update() {}
 
     override fun dispose() {
         font.dispose()
         skin.dispose()
-        stage.dispose()
     }
 }

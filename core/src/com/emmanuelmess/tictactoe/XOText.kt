@@ -11,10 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 
 
-class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
+class XOText(stage: Stage, generator: FreeTypeFontGenerator): StageEntity {
     private val fontBig: BitmapFont
     private val fontSmall: BitmapFont
     private val skinBig: Skin
@@ -22,12 +21,10 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
     private val restartTexture: Texture
     private val nameLabel: Label
     private val restartButton: Button
-    private val stage: Stage
-
 
     init {
         fontBig = generator.generateFont(FreeTypeFontGenerator.FreeTypeFontParameter().apply {
-            size = 180
+            size = 100
         })
 
         skinBig = Skin().apply {
@@ -60,8 +57,6 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
             })
         }
 
-        stage = Stage(ScreenViewport())
-
         stage.addActor(Table().apply {
             add(VerticalGroup().apply {
                 addActor(nameLabel)
@@ -79,14 +74,8 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
         Gdx.input.inputProcessor = stage
     }
 
-    override fun update(width: Int, height: Int) {
-        stage.viewport.update(width, height, true)
-    }
-
-    override fun draw() {
+    override fun update() {
         nameLabel.setText("${GameData.pointsX} | ${GameData.pointsO}")
-
-        stage.draw()
     }
 
     override fun dispose() {
@@ -95,6 +84,5 @@ class XOText(generator: FreeTypeFontGenerator): DrawableEntity {
         skinBig.dispose()
         skinSmall.dispose()
         restartTexture.dispose()
-        stage.dispose()
     }
 }

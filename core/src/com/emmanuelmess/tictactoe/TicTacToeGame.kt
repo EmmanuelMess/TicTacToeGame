@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FillViewport
+import com.badlogic.gdx.utils.viewport.FitViewport
 
 const val DEBUG = true
 
@@ -34,10 +36,17 @@ class TicTacToeGame : ApplicationAdapter() {
     private lateinit var camera: OrthographicCamera
     private lateinit var shapeRenderer: ShapeRenderer
 
+    private lateinit var textViewport: FitViewport
+    private lateinit var stage: Stage
+
     override fun create() {
         val generator = FreeTypeFontGenerator(Gdx.files.internal("fonts/Roboto-Medium.ttf"))
-        ticTacToeText = TicTacToeText(generator)
-        xoText = XOText(generator)
+        textViewport = FitViewport(720f, 1280f)
+        stage = Stage(textViewport)
+
+        ticTacToeText = TicTacToeText(stage, generator)
+        xoText = XOText(stage, generator)
+
         generator.dispose()
 
         camera = OrthographicCamera().apply {
@@ -56,14 +65,14 @@ class TicTacToeGame : ApplicationAdapter() {
                 Grid.HEIGHT
         )
 
+
         Gdx.graphics.isContinuousRendering = false
         Gdx.graphics.requestRendering()
     }
 
     override fun resize(width: Int, height: Int) {
-        ticTacToeText.update(width, height)
         viewport.update(width, height, true)
-        xoText.update(width, height)
+        stage.viewport.update(width, height, true)
     }
 
     override fun render() {
@@ -73,14 +82,14 @@ class TicTacToeGame : ApplicationAdapter() {
 
         shapeRenderer.projectionMatrix = viewport.camera.combined
 
-        ticTacToeText.draw()
+        ticTacToeText.update()
+        xoText.update()
+
         ticTacToeRenderer.draw(shapeRenderer)
-        xoText.draw()
+        stage.draw()
 
         if(DEBUG) {
-            ticTacToeText.drawDebug()
             ticTacToeRenderer.drawDebug(shapeRenderer)
-            xoText.drawDebug()
         }
     }
 
@@ -88,6 +97,7 @@ class TicTacToeGame : ApplicationAdapter() {
         ticTacToeText.dispose()
         ticTacToeRenderer.dispose()
         shapeRenderer.dispose()
+        stage.dispose()
         xoText.dispose()
     }
 }
