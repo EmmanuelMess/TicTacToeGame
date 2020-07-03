@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
 
 
-class XOText(stage: Stage, generator: FreeTypeFontGenerator): StageEntity {
+class XOText(stage: Stage, generator: FreeTypeFontGenerator): Coreographer {
     private val fontBig: BitmapFont
     private val fontSmall: BitmapFont
     private val skinBig: Skin
@@ -70,8 +70,6 @@ class XOText(stage: Stage, generator: FreeTypeFontGenerator): StageEntity {
             add(Label("O", this@XOText.skinSmall)).padRight(50f).expand().bottom().right()
             setFillParent(true)
         })
-
-        Gdx.input.inputProcessor = stage
     }
 
     override fun update() {

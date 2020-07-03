@@ -7,10 +7,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
+import java.util.*
 
-const val DEBUG = true
+
+const val DEBUG = false
 
 class TicTacToeGame : ApplicationAdapter() {
     object Size {
@@ -40,11 +43,15 @@ class TicTacToeGame : ApplicationAdapter() {
     private lateinit var stage: Stage
 
     override fun create() {
+        val baseFileHandle = Gdx.files.internal("i18n/TicTacToe")
+        val locale = Locale("", "es")
+        val translationBundle: I18NBundle = I18NBundle.createBundle(baseFileHandle, locale)
+
         val generator = FreeTypeFontGenerator(Gdx.files.internal("fonts/Roboto-Medium.ttf"))
         textViewport = FitViewport(720f, 1280f)
         stage = Stage(textViewport)
 
-        ticTacToeText = TicTacToeText(stage, generator)
+        ticTacToeText = TicTacToeText(stage, generator, translationBundle)
         xoText = XOText(stage, generator)
 
         generator.dispose()
@@ -68,6 +75,7 @@ class TicTacToeGame : ApplicationAdapter() {
 
         Gdx.graphics.isContinuousRendering = false
         Gdx.graphics.requestRendering()
+        Gdx.input.inputProcessor = stage
     }
 
     override fun resize(width: Int, height: Int) {

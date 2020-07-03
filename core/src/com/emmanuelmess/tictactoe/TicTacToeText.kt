@@ -8,8 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.I18NBundle
 
-class TicTacToeText(stage: Stage, generator: FreeTypeFontGenerator): StageEntity {
+class TicTacToeText(
+        stage: Stage,
+        generator: FreeTypeFontGenerator,
+        translationBundle: I18NBundle
+): Coreographer {
     private val font: BitmapFont
     private val skin: Skin
 
@@ -22,7 +27,7 @@ class TicTacToeText(stage: Stage, generator: FreeTypeFontGenerator): StageEntity
             add("default", Label.LabelStyle(font, Color.BLACK))
         }
 
-        val nameLabel = Label("Tic Tac Toe", skin).apply {
+        val nameLabel = Label(translationBundle["game"], skin).apply {
             setAlignment(Align.topLeft)
         }
 
