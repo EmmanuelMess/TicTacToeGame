@@ -1,5 +1,6 @@
 package com.emmanuelmess.tictactoe
 
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
@@ -12,22 +13,16 @@ import com.badlogic.gdx.utils.I18NBundle
 
 class TicTacToeText(
         stage: Stage,
-        generator: FreeTypeFontGenerator,
-        translationBundle: I18NBundle
+        assetManager: AssetManager
 ): Coreographer {
-    private val font: BitmapFont
     private val skin: Skin
 
     init {
-        val parameter = FreeTypeFontGenerator.FreeTypeFontParameter()
-        parameter.size = 120
-        font = generator.generateFont(parameter)
-
         skin = Skin().apply {
-            add("default", Label.LabelStyle(font, Color.BLACK))
+            add("default", Label.LabelStyle(assetManager.get<BitmapFont>("Roboto-120.ttf"), Color.BLACK))
         }
 
-        val nameLabel = Label(translationBundle["game"], skin).apply {
+        val nameLabel = Label(assetManager.get<I18NBundle>("i18n/TicTacToe")["game"], skin).apply {
             setAlignment(Align.topLeft)
         }
 
@@ -42,7 +37,6 @@ class TicTacToeText(
     override fun update() {}
 
     override fun dispose() {
-        font.dispose()
         skin.dispose()
     }
 }

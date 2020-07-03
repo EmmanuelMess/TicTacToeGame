@@ -1,10 +1,9 @@
 package com.emmanuelmess.tictactoe
 
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.*
@@ -13,39 +12,26 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
 
 
-class XOText(stage: Stage, generator: FreeTypeFontGenerator): Coreographer {
-    private val fontBig: BitmapFont
-    private val fontSmall: BitmapFont
+class XOText(stage: Stage, assetManager: AssetManager): Coreographer {
     private val skinBig: Skin
     private val skinSmall: Skin
-    private val restartTexture: Texture
     private val nameLabel: Label
     private val restartButton: Button
 
     init {
-        fontBig = generator.generateFont(FreeTypeFontGenerator.FreeTypeFontParameter().apply {
-            size = 100
-        })
-
         skinBig = Skin().apply {
-            add("default", Label.LabelStyle(fontBig, Color.BLACK))
+            add("default", Label.LabelStyle(assetManager.get<BitmapFont>("Roboto-100.ttf"), Color.BLACK))
         }
 
-        fontSmall = generator.generateFont(FreeTypeFontGenerator.FreeTypeFontParameter().apply {
-            size = 80
-        })
-
         skinSmall = Skin().apply {
-            add("default", Label.LabelStyle(fontSmall, Color.BLACK))
+            add("default", Label.LabelStyle(assetManager.get<BitmapFont>("Roboto-80.ttf"), Color.BLACK))
         }
 
         nameLabel = Label("- | -", skinBig).apply {
             setAlignment(Align.topLeft)
         }
 
-        restartTexture = Texture(Gdx.files.internal("images/restart_game.png"))
-
-        val restartDrawable = TextureRegionDrawable(restartTexture)
+        val restartDrawable = TextureRegionDrawable(assetManager.get<Texture>("images/restart_game.png"))
 
         restartButton = Button(restartDrawable, restartDrawable).apply {
             setSize(16f, 16f)
@@ -77,10 +63,7 @@ class XOText(stage: Stage, generator: FreeTypeFontGenerator): Coreographer {
     }
 
     override fun dispose() {
-        fontBig.dispose()
-        fontSmall.dispose()
         skinBig.dispose()
         skinSmall.dispose()
-        restartTexture.dispose()
     }
 }

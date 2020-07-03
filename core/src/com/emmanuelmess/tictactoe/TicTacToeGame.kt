@@ -2,15 +2,21 @@ package com.emmanuelmess.tictactoe
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
-import java.util.*
 
 
 const val DEBUG = false
@@ -31,6 +37,8 @@ class TicTacToeGame : ApplicationAdapter() {
         const val WIDTH = 70f * Size.C
     }
 
+    private lateinit var assetManager: AssetManager
+
     private lateinit var ticTacToeText: TicTacToeText
     private lateinit var ticTacToeRenderer: TicTacToeRenderer
     private lateinit var xoText: XOText
@@ -43,18 +51,36 @@ class TicTacToeGame : ApplicationAdapter() {
     private lateinit var stage: Stage
 
     override fun create() {
-        val baseFileHandle = Gdx.files.internal("i18n/TicTacToe")
-        val locale = Locale("", "es")
-        val translationBundle: I18NBundle = I18NBundle.createBundle(baseFileHandle, locale)
+        assetManager = AssetManager().apply {
+            InternalFileHandleResolver().also {
+                setLoader(FreeTypeFontGenerator::class.java, FreeTypeFontGeneratorLoader(it))
+                setLoader(BitmapFont::class.java, ".ttf", FreetypeFontLoader(it))
+            }
 
-        val generator = FreeTypeFontGenerator(Gdx.files.internal("fonts/Roboto-Medium.ttf"))
+
+            load("i18n/TicTacToe", I18NBundle::class.java)
+            load("Roboto-120.ttf", BitmapFont::class.java, FreeTypeFontLoaderParameter().apply {
+                fontFileName = "fonts/Roboto-Medium.ttf"
+                fontParameters.size = 120
+            })
+            load("Roboto-100.ttf", BitmapFont::class.java, FreeTypeFontLoaderParameter().apply {
+                fontFileName = "fonts/Roboto-Medium.ttf"
+                fontParameters.size = 100
+            })
+            load("Roboto-80.ttf", BitmapFont::class.java, FreeTypeFontLoaderParameter().apply {
+                fontFileName = "fonts/Roboto-Medium.ttf"
+                fontParameters.size = 80
+            })
+            load("images/restart_game.png", Texture::class.java)
+
+            finishLoading()
+        }
+
         textViewport = FitViewport(720f, 1280f)
         stage = Stage(textViewport)
 
-        ticTacToeText = TicTacToeText(stage, generator, translationBundle)
-        xoText = XOText(stage, generator)
-
-        generator.dispose()
+        ticTacToeText = TicTacToeText(stage, assetManager)
+        xoText = XOText(stage, assetManager)
 
         camera = OrthographicCamera().apply {
             setToOrtho(true, Size.WIDTH, Size.HEIGHT)
@@ -102,6 +128,7 @@ class TicTacToeGame : ApplicationAdapter() {
     }
 
     override fun dispose() {
+        assetManager.dispose()
         ticTacToeText.dispose()
         ticTacToeRenderer.dispose()
         shapeRenderer.dispose()
